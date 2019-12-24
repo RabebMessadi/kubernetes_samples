@@ -1,8 +1,7 @@
-Example: https://kubernetes.io/docs/tutorials/stateless-application/expose-external-ip-address/
+example from: https://kubernetes.io/docs/tutorials/stateless-application/guestbook/
 
-You have need to a cloud platform, not run on minikube
-command:
 
+### commands
 ```
 vim redis-master-deployment.yaml
 kubectl
@@ -29,11 +28,10 @@ kubectl apply -f frontend-service.yaml
 kubectl get pod
 kubectl get service
 kubectl get pod
-
 kubectl get service
 kubectl get pod
 kubectl delete deployment -l app=redis
 kubectl get pod
 kubectl get service
-
 ```
+
