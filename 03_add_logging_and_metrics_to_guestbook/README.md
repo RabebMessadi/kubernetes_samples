@@ -1,6 +1,7 @@
 # Add logging and metrics to the PHP / Redis Guestbook example
 
 part 1: https://kubernetes.io/docs/tutorials/stateless-application/guestbook/
+
 part 2: https://kubernetes.io/docs/tutorials/stateless-application/guestbook-logs-metrics-with-elk/
 
 
@@ -27,3 +28,21 @@ kubectl get pods
 ```
 
 ### metrics
+Create a cluster level role binding so that you can deploy kube-state-metrics and the Beats at the cluster level (in kube-system).
+
+```
+kubectl create clusterrolebinding cluster-admin-binding \
+ --clusterrole=cluster-admin --user=pierangelo1982@gmail.com
+```
+
+insrall kube metrics
+```
+kubectl get pods --namespace=kube-system | grep kube-state
+
+```
+
+
+Clone the Elastic examples GitHub repo
+```
+git clone https://github.com/elastic/examples.git
+```
