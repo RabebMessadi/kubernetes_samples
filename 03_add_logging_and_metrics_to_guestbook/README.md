@@ -4,7 +4,8 @@ part 1: https://kubernetes.io/docs/tutorials/stateless-application/guestbook/
 
 part 2: https://kubernetes.io/docs/tutorials/stateless-application/guestbook-logs-metrics-with-elk/
 
-
+# N.B:
+examples is the original repository that I had cloned, but is not update with the last request of the last kubernetes request, so I copy it in beats with my custom update.
 
 ### create redis php guestbook
 ```
