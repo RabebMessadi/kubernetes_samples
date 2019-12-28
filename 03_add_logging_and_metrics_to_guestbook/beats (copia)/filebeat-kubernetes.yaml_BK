@@ -28,7 +28,7 @@ data:
       providers:
         - type: kubernetes
           templates:
-            - condition.contains:
+            - condition.equals:
                 kubernetes.labels.app: redis
               config:
                 - module: redis
@@ -40,6 +40,34 @@ data:
                   slowlog:
                     enabled: true
                     var.hosts: ["${data.host}:${data.port}"]
+            - condition.contains:
+                kubernetes.labels.tier: frontend
+              config:
+                - module: apache2
+                  access:
+                    input:
+                      type: docker
+                      containers.ids:
+                        - ${data.kubernetes.container.id}
+                  error:
+                    input:
+                      type: docker
+                      containers.ids:
+                        - ${data.kubernetes.container.id}
+            - condition.equals:
+                kubernetes.labels.app: mysql
+              config:
+                - module: mysql
+                  error:
+                    input:
+                      type: docker
+                      containers.ids:
+                        - ${data.kubernetes.container.id}
+                  slowlog:
+                    input:
+                      type: docker
+                      containers.ids:
+                        - ${data.kubernetes.container.id}
 
     processors:
       - drop_event:
@@ -70,7 +98,7 @@ data:
       host: ${KIBANA_HOST}
     
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: filebeat-dynamic
@@ -79,9 +107,6 @@ metadata:
     k8s-app: filebeat-dynamic
     kubernetes.io/cluster-service: "true"
 spec:
-  selector:
-    matchLabels:
-      k8s-app: filebeat-dynamic
   template:
     metadata:
       labels:
