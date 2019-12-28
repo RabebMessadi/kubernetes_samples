@@ -3,6 +3,52 @@ apiVersion: v1
 metadata:
   name: kube-logging
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: do-block-storage
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/pierangelo/lavori/personali/storage-test"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: task-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-pv-pod
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: task-pv-claim
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: task-pv-storage
+---
 kind: Service
 apiVersion: v1
 metadata:
@@ -11,10 +57,10 @@ metadata:
   labels:
     app: elasticsearch
 spec:
-  type: NodePort
+  #type: NodePort
   selector:
     app: elasticsearch
-  #clusterIP: None
+  clusterIP: None
   ports:
     - port: 9200
       name: rest
@@ -101,52 +147,6 @@ spec:
         requests:
           storage: 5Gi
 
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: do-block-storage
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/home/pierangelo/lavori/personali/storage-test"
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: task-pv-claim
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 3Gi
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: task-pv-pod
-spec:
-  volumes:
-    - name: task-pv-storage
-      persistentVolumeClaim:
-        claimName: task-pv-claim
-  containers:
-    - name: task-pv-container
-      image: nginx
-      ports:
-        - containerPort: 80
-          name: "http-server"
-      volumeMounts:
-        - mountPath: "/usr/share/nginx/html"
-          name: task-pv-storage
 
 
 
