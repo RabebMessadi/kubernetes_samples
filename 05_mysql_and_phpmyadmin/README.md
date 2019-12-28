@@ -1,4 +1,4 @@
-### MYSQL + PHPMYADMIN in Kubernetes
+# MYSQL + PHPMYADMIN in Kubernetes
 
 ## MYSQL
 
@@ -140,9 +140,9 @@ kubectl delete -f mysql-pv.yaml
 ```
 
 
-## PHPMYADMIN
+# PHPMYADMIN
 
-# secret
+### secret
 
 create a file named phpmyadmin-secret.yaml
 ```
@@ -160,7 +160,7 @@ deploy
 kubectl create -f phpmyadmin-secret.yaml
 ```
 
-# deployment
+### deployment
 
 create a file named phpmyadmin-deployment.yaml
 ```
@@ -202,7 +202,7 @@ deploy file:
 kubectl create -f deployment-phpmyadmin.yaml
 ```
 
-# service
+### service
 create a file named phpmyadmin-service.yaml
 ```
 apiVersion: v1
@@ -224,7 +224,7 @@ deploy:
 kubectl create -f phpmyadmin-service.yaml 
 ```
 
-# delete
+### delete
 
 ```
 kubectl delete -f phpmyadmin/phpmyadmin-service.yaml
