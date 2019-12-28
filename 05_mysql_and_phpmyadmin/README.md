@@ -1,0 +1,1 @@
+### MYSQL + PHPMYADMIN in Kubernetes
