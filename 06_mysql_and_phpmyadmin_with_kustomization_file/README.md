@@ -1,4 +1,9 @@
-# MYSQL and PHPMYADMIN in Kubernetes
+# MYSQL and PHPMYADMIN in Kubernetes with Kustomization file
+
+### create 64bit password
+```
+echo -n 'mypassword' | base64
+```
 
 ### secrets
 create a file named project-secrets.yaml
@@ -15,6 +20,31 @@ data:
 deploy:
 ```
 kubectl create -f project-secrets.yaml
+
+```
+or a  kustomization.yaml
+```
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=mypassword
+
+resources:
+  - project-secrets.yaml
+  - mysql-pv.yaml
+  - mysql-service.yaml
+  - mysql-deployment.yaml
+  - phpmyadmin-service.yaml
+  - phpmyadmin-deployment.yaml
+```
+apply:
+```
+kubectl apply -k ./
+```
+
+delete
+```
+kubectl delete -k ./
 ```
 ## MYSQL
 ### create Persistent Volume
