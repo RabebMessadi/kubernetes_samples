@@ -10,3 +10,6 @@ resources:
   - mysql-deployment.yaml
   - phpmyadmin-service.yaml
   - phpmyadmin-deployment.yaml
+  - wordpress-pv.yaml
+  - wordpress-service.yaml
+  - wordpress-deployment.yaml

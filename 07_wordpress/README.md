@@ -1,4 +1,4 @@
-# MYSQL and PHPMYADMIN in Kubernetes with Kustomization file
+# WORDPRESS with MYSQL and PHPMYADMIN in Kubernetes
 
 ### create 64bit password
 ```
@@ -143,8 +143,8 @@ spec:
         name: mysql
         env:
           # Use secret in real usage
-        - name: project-secrets
-          value: root-password
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
         ports:
         - containerPort: 3306
           name: mysql
@@ -251,6 +251,41 @@ check on the browser:
 ```
 minikube service phpmyadmin-service --url
 ```
+
+## WORDPRESS
+### Persistent Volume
+create a file named wordpress-pv.yaml
+```
+insert code
+```
+
+deploy:
+```
+kubectl create -f wordpress-pv.yaml
+```
+
+### Service
+create a file named wordpress-service.yaml
+```
+insert code
+```
+
+deploy:
+```
+kubectl create -f wordpress-service.yaml
+```
+
+### Deployment
+create a file named wordpress-deployment.yaml
+```
+insert code
+```
+
+deploy:
+```
+kubectl create -f wordpress-deployment.yaml
+```
+
 ## delete
 ```
 kubectl delete -f project-secrets.yaml
@@ -264,4 +299,10 @@ kubectl delete -f mysql-deployment.yaml
 kubectl delete -f phpmyadmin-service.yaml 
 
 kubectl delete -f phpmyadmin-deployment.yaml
+
+kubectl delete -f wordpress-pv.yaml
+
+kubectl delete -f wordpress-service.yaml
+
+kubectl delete -f wordpress-deployment.yaml
 ```
