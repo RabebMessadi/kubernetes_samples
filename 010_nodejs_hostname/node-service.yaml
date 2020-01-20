@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-hostname
+  labels:
+    app: node-hostname
+spec:
+  ports:
+    - port: 3000
+  selector:
+    app: node-hostname
+    tier: frontend
+  type: LoadBalancer
