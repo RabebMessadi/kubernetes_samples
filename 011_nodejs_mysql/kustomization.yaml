@@ -1,0 +1,7 @@
+resources:
+  - secrets.yaml
+  - mysql-pv.yaml
+  - mysql-service.yaml
+  - mysql-deployment.yaml
+  - node-service.yaml
+  - node-deployment.yaml
